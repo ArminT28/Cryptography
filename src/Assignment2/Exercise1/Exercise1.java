@@ -7,10 +7,11 @@ public class Exercise1 {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ciphertext to hack is:");
         String ciphertext = scanner.nextLine();
-        scanner.close();
 
         String plaintext = HackShift(ciphertext);
         System.out.println("Decrypted Ciphertext: " + plaintext);
+
+        scanner.close();
     }
 
     ///Question, how many Quadri-, Tri- and Digramms should we check for at the Shift Cipher hack function?
@@ -32,23 +33,47 @@ public class Exercise1 {
             ///Check if the plaintext has most common Di-, Tri- and Quadrigrams
             ///If at least 4 Digramms and 2 Trigramm || 2 Quadrigramm is found we found the answer
             if (numberOfQuadrigrams(plainText)>=2) {
-                System.out.println("Found at least two Quadrigramms: " + plainText);
-                return plainText;
+                System.out.println("Found at least two Quadrigramms for the key:" + key);
+                System.out.println(plainText);
+                System.out.print("Is PlainText readable? (Y/N): ");
+                Scanner scanner = new Scanner(System.in);
+                String answer = scanner.nextLine();
+                if (answer.equals("Y")) {
+                    return plainText;
+                }
             }
             else if (numberOfTrigramms(plainText)>=4) {
-                System.out.println("Found at least four Trigramms: " + plainText);
-                return plainText;
+                System.out.println("Found at least four Trigramms for the key:" + key);
+                System.out.println(plainText);
+                System.out.print("Is PlainText readable? (Y/N): ");
+                Scanner scanner = new Scanner(System.in);
+                String answer = scanner.nextLine();
+                if (answer.equals("Y")) {
+                    return plainText;
+                }
             }
             else if (numberOfTrigramms(plainText)>=2 && numberOfDigramms(plainText)>=4) {
-                System.out.println("Found at least two Trigramms and at least four Digramms: " + plainText);
-                return plainText;
+                System.out.println("Found at least two Trigramms and at least four Digramms for the key:" + key);
+                System.out.println(plainText);
+                System.out.print("Is PlainText readable? (Y/N): ");
+                Scanner scanner = new Scanner(System.in);
+                String answer = scanner.nextLine();
+                if (answer.equals("Y")) {
+                    return plainText;
+                }
             }
             else if (numberOfDigramms(plainText)>=6) {
-            System.out.println("Found at least six Digramms: " + plainText);
-                return plainText;
+            System.out.println("Found at least six Digramms for the key:" + key);
+                System.out.println(plainText);
+                System.out.print("Is PlainText readable? (Y/N): ");
+                Scanner scanner = new Scanner(System.in);
+                String answer = scanner.nextLine();
+                if (answer.equals("Y")) {
+                    return plainText;
+                }
             }
         }
-        return plainText;
+        return "";
     }
 
     public static int numberOfDigramms(String plainText) {
