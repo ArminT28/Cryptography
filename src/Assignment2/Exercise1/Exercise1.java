@@ -13,7 +13,7 @@ public class Exercise1 {
         System.out.println("Decrypted Ciphertext: " + plaintext);
     }
 
-    ///Question, how many 4 letter , how many 3 letter , how many 2 letter words should we check for at the Shift Cipher hack function?
+    ///Question, how many Quadri-, Tri- and Digramms should we check for at the Shift Cipher hack function?
     public static String HackShift(String cipherText) {
         String plainText = "";
         for (int key = 0; key < 26; key++) {
@@ -28,59 +28,77 @@ public class Exercise1 {
                     plainText += singleCharacter;
                 }
             }
-            ///Check if the plaintext has most common 2-3-4 letter words
-            ///If at least two 2-letter words and one 3-letter word || one 4-letter word is found we found the answer
-            if (numberOfFourLetterWord(plainText)>=2) {
-                System.out.println("Found at least two four letter words: " + plainText);
-                return plainText;
-            }
-            else if (numberOfThreeLetterWord(plainText)>=4) {
-                System.out.println("Found at least four three letter words: " + plainText);
-                return plainText;
-            }
-            else if (numberOfThreeLetterWord(plainText)>=2 && numberOfTwoLetterWords(plainText)>=4) {
-                System.out.println("Found at least two three letter word and at least four two letter words: " + plainText);
-                return plainText;
-            }
-            else if (numberOfTwoLetterWords(plainText)>=6) {
-            System.out.println("Found at least six two letter words: " + plainText);
-                return plainText;
-            }
             System.out.println("Key: " + key + " | PlainText: " + plainText);
+            ///Check if the plaintext has most common Di-, Tri- and Quadrigrams
+            ///If at least 4 Digramms and 2 Trigramm || 2 Quadrigramm is found we found the answer
+            if (numberOfQuadrigrams(plainText)>=2) {
+                System.out.println("Found at least two Quadrigramms: " + plainText);
+                return plainText;
+            }
+            else if (numberOfTrigramms(plainText)>=4) {
+                System.out.println("Found at least four Trigramms: " + plainText);
+                return plainText;
+            }
+            else if (numberOfTrigramms(plainText)>=2 && numberOfDigramms(plainText)>=4) {
+                System.out.println("Found at least two Trigramms and at least four Digramms: " + plainText);
+                return plainText;
+            }
+            else if (numberOfDigramms(plainText)>=6) {
+            System.out.println("Found at least six Digramms: " + plainText);
+                return plainText;
+            }
         }
         return plainText;
     }
 
-    public static int numberOfTwoLetterWords(String plainText) {
-        String[] possibleTwoLetterWords = {"OF", "TO", "IN", "IT", "IS", "BE", "AS", "AT", "SO", "WE", "HE", "BY", "OR", "ON", "DO", "IF", "ME", "MY", "UP", "AN", "GO", "NO", "US", "AM"};
-        int foundWords = 0;
-        for (String word : possibleTwoLetterWords) {
-            if (plainText.contains(word)) {
-                foundWords++;
+    public static int numberOfDigramms(String plainText) {
+        ///20 most common digramms
+        String[] possibleDigramms = {
+                "TH", "HE", "IN", "ER", "AN", "RE", "ND", "ON", "EN", "AT",
+                "OU", "ED", "HA", "TO", "OR", "IT", "IS", "HI", "ES", "NG"
+        };
+
+        int foundDigramms = 0;
+        for (String digram : possibleDigramms) {
+            if (plainText.toUpperCase().contains(digram)) {
+                foundDigramms++;
             }
         }
-        return foundWords;
+        return foundDigramms;
     }
 
-    public static int numberOfThreeLetterWord(String plainText) {
-        String[] possibleThreeLetterWords = {"THE", "AND", "FOR", "ARE", "BUT", "NOT", "YOU", "ALL", "ANY", "CAN", "HAD", "HER", "WAS", "ONE", "OUR", "OUT", "DAY", "GET", "HAS", "HIM", "HIS", "HOW", "MAN", "NEW", "NOW", "OLD", "SEE", "TWO", "WAY", "WHO", "BOY", "DID", "ITS", "LET", "PUT", "SAY", "SHE", "TOO", "USE"};
-        int foundWords = 0;
-        for (String word : possibleThreeLetterWords) {
-            if (plainText.contains(word)) {
-                foundWords++;
+
+    public static int numberOfTrigramms(String plainText) {
+        //20 most common trigramms
+        String[] possibleTrigramms = {
+                "THE", "AND", "ING", "HER", "HAT", "HIS", "THA", "ERE", "FOR",
+                "ENT", "ION", "TER", "WAS", "YOU", "ITH", "VER", "ALL", "WIT",
+                "THI", "TIO"
+        };
+
+        int foundTrigramms = 0;
+        for (String trigram : possibleTrigramms) {
+            if (plainText.toUpperCase().contains(trigram)) {
+                foundTrigramms++;
             }
         }
-        return foundWords;
+        return foundTrigramms;
     }
 
-    public static int numberOfFourLetterWord(String plainText) {
-        String[] possibleFourLetterWords = {"THAT", "WITH", "HAVE", "THIS", "WILL", "YOUR", "FROM", "THEY", "KNOW", "WANT", "BEEN", "GOOD", "MUCH", "SOME", "TIME"};
-        int foundWords = 0;
-        for (String word : possibleFourLetterWords) {
-            if (plainText.contains(word)) {
-                foundWords++;
+    public static int numberOfQuadrigrams(String plainText) {
+        //20 most common quadrigrams
+        String[] possibleQuadrigrams = {
+                "THAT", "THER", "WITH", "TION", "HERE", "OULD", "IGHT", "HAVE",
+                "HICH", "WHIC", "THIS", "THIN", "THEY", "ATIO", "EVER", "FROM",
+                "OUGH", "WERE", "HING", "MENT"
+        };
+
+        int foundQuadrigrams = 0;
+        for (String quadrigram : possibleQuadrigrams) {
+            if (plainText.toUpperCase().contains(quadrigram)) {
+                foundQuadrigrams++;
             }
         }
-        return foundWords;
+        return foundQuadrigrams;
     }
 }
