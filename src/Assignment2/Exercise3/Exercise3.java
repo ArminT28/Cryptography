@@ -9,18 +9,18 @@ public class Exercise3 {
         System.out.println("Plaintext is:");
         String plainText = scanner.nextLine();
 
-        String plaintext = EncryptCaesar(plainText);
+        List<Double> plaintext = EncryptCaesar(plainText);
         System.out.println("Encrypted analog Ciphertext: " + plaintext);
     }
 
-    private static String EncryptCaesar(String plainText) {
+    private static List<Double> EncryptCaesar(String plainText) {
         String upperPlainText = plainText.toUpperCase();
 
         int caesarKey = 3;
 
         char[] charactersArray = upperPlainText.toCharArray();
 
-        StringBuilder cipherText = new StringBuilder();
+        List<Double> cipherText = new ArrayList<>();
 
         for (char singleCharacter : charactersArray) {
             if (Character.isLetter(singleCharacter)) {
@@ -28,13 +28,17 @@ public class Exercise3 {
 
                 int encryptedValue = (singleCharacterValue + caesarKey) % 26;
 
-                String binaryEncryptedValue = Integer.toBinaryString(encryptedValue);
+//                String binaryEncryptedValue = Integer.toBinaryString(encryptedValue);
+//
+//                cipherText.append(String.format("%5s", binaryEncryptedValue).replace(' ', '0'));
 
-                cipherText.append(String.format("%5s", binaryEncryptedValue).replace(' ', '0'));
+                double encryptedMappedValue = (encryptedValue - 31.0 / 2.0) / ( 31.0 / 2.0);
+
+                cipherText.add(encryptedMappedValue);
             } else {
-                cipherText.append(singleCharacter);
+                cipherText.add((double)singleCharacter - 'A');
             }
         }
-        return cipherText.toString();
+        return cipherText;
     }
 }
