@@ -1,7 +1,11 @@
-package Assignment2.Exercise2;
+///package Assignment2.Exercise2;
+///Delete the above line when you run from the terminal and leave it when you run from IDE
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+///Short Example: QOZFZFNCHNSFHRZCPUFTNBXZGGBFHQNSZCWQOHYGPZCQHIQ
+///Long Example: LREKMEPQOCPCBOYGYWPPEHFIWPFZYQGDZERGYPWFYWECYOJEQCMYEGFGYPWFCYMJYFGFMFGWPQGDZERGPGFFZEYCIEDBCGPFEHFBEFFERQCPJEEPQRODFEXFWCPOWPEWLYETERCBXGLLEREPFQGDZERFEHFBEFFERYXEDEPXGPSWPGFYDWYGFGWPGPFZEIEYYCSE
 
 public class Exercise2 {
     private static final int CONFIG_ALPHABET_SIZE = 26;
@@ -10,10 +14,11 @@ public class Exercise2 {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ciphertext to hack is:");
         String cipherText = scanner.nextLine();
-        scanner.close();
 
         String result = HackAffine(cipherText);
         System.out.println("Plaintext: " + result);
+
+        scanner.close();
     }
 
     private static String HackAffine(String cipherText) {
@@ -41,66 +46,63 @@ public class Exercise2 {
             int x2 = frequencyCharacter2 - 'A';
             int y2 = occurenceCharacter2 - 'A';
 
-            List<List<Integer>> solutions = solveMathematicalSystem(x1, y1, x2, y2);
-            if(solutions !=null) {
-                for (List<Integer> singleSolution : solutions) {
-                    int gcd = gcd(singleSolution.get(0), CONFIG_ALPHABET_SIZE);
-                    if (gcd == 1) {
-                        int a = singleSolution.get(0);
-                        int b = singleSolution.get(1);
-                        System.out.println("For the system \t{" + x1 + "a + b = " + y1);
-                        System.out.println("\t\t\t\t{" + x2 + "a + b = " + y2);
-                        System.out.println("Found a solution a: " + a + " and b: " + b);
-                        String plainText = Decryption(a,b,cipherText,CONFIG_ALPHABET_SIZE);
-                        System.out.println(plainText + "\n");
+            int[] solution = solveMathematicalSystem(x1, y1, x2, y2);
+            if(solution !=null) {
+                int gcd = gcd(solution[0], CONFIG_ALPHABET_SIZE);
+                if (gcd == 1) {
+                    int a = solution[0];
+                    int b = solution[1];
+                    String plainText = Decryption(a,b,cipherText,CONFIG_ALPHABET_SIZE);
 
-                        ///Check if the plaintext has most common Di-, Tri- and Quadrigrams
-                        ///If at least 4 Digramms and 2 Trigramm || 2 Quadrigramm is found we found the answer
-                        if (numberOfQuadrigrams(plainText)>=2) {
-                            System.out.println("Found at least two Quadrigramms for a:" + a + " b:" + b);
-                            System.out.println(plainText);
-                            System.out.print("Is PlainText readable? (Y/N): ");
-                            Scanner scanner = new Scanner(System.in);
-                            String answer = scanner.nextLine();
-                            if (answer.equals("Y")) {
-                                return plainText;
-                            }
+                    ///Check if the plaintext has most common Di-, Tri- and Quadrigrams
+                    ///If at least 4 Digramms and 2 Trigramm || 2 Quadrigramm is found we found the answer
+                    if (numberOfQuadrigrams(plainText)>=2) {
+                        System.out.println(frequencyCharacter1 + "->" + occurenceCharacter1 + " " + frequencyCharacter2 + "->" + occurenceCharacter2);
+                        System.out.println("Found at least two Quadrigramms for a:" + a + " b:" + b);
+                        System.out.println(plainText);
+                        System.out.print("Is PlainText readable? (Y/N): ");
+                        Scanner scanner = new Scanner(System.in);
+                        String answer = scanner.nextLine();
+                        if (answer.equals("Y")) {
+                            return plainText;
                         }
-                        else if (numberOfTrigramms(plainText)>=4) {
-                            System.out.println("Found at least four Trigramms for a:" + a + " b:" + b);
-                            System.out.println(plainText);
-                            System.out.print("Is PlainText readable? (Y/N): ");
-                            Scanner scanner = new Scanner(System.in);
-                            String answer = scanner.nextLine();
-                            if (answer.equals("Y")) {
-                                return plainText;
-                            }
+                    }
+                    else if (numberOfTrigramms(plainText)>=4) {
+                        System.out.println(frequencyCharacter1 + "->" + occurenceCharacter1 + " " + frequencyCharacter2 + "->" + occurenceCharacter2);
+                        System.out.println("Found at least four Trigramms for a:" + a + " b:" + b);
+                        System.out.println(plainText);
+                        System.out.print("Is PlainText readable? (Y/N): ");
+                        Scanner scanner = new Scanner(System.in);
+                        String answer = scanner.nextLine();
+                        if (answer.equals("Y")) {
+                            return plainText;
                         }
-                        else if (numberOfTrigramms(plainText)>=2 && numberOfDigramms(plainText)>=4) {
-                            System.out.println("Found at least two Trigramms and at least four Digramms for a:" + a + " b:" + b);
-                            System.out.println(plainText);
-                            System.out.print("Is PlainText readable? (Y/N): ");
-                            Scanner scanner = new Scanner(System.in);
-                            String answer = scanner.nextLine();
-                            if (answer.equals("Y")) {
-                                return plainText;
-                            }
+                    }
+                    else if (numberOfTrigramms(plainText)>=2 && numberOfDigramms(plainText)>=4) {
+                        System.out.println(frequencyCharacter1 + "->" + occurenceCharacter1 + " " + frequencyCharacter2 + "->" + occurenceCharacter2);
+                        System.out.println("Found at least two Trigramms and at least four Digramms for a:" + a + " b:" + b);
+                        System.out.println(plainText);
+                        System.out.print("Is PlainText readable? (Y/N): ");
+                        Scanner scanner = new Scanner(System.in);
+                        String answer = scanner.nextLine();
+                        if (answer.equals("Y")) {
+                            return plainText;
                         }
-                        else if (numberOfDigramms(plainText)>=6) {
-                            System.out.println("Found at least six Digramms for a:" + a + " b:" + b);
-                            System.out.println(plainText);
-                            System.out.print("Is PlainText readable? (Y/N): ");
-                            Scanner scanner = new Scanner(System.in);
-                            String answer = scanner.nextLine();
-                            if (answer.equals("Y")) {
-                                return plainText;
-                            }
+                    }
+                    else if (numberOfDigramms(plainText)>=6) {
+                        System.out.println(frequencyCharacter1 + "->" + occurenceCharacter1 + " " + frequencyCharacter2 + "->" + occurenceCharacter2);
+                        System.out.println("Found at least six Digramms for a:" + a + " b:" + b);
+                        System.out.println(plainText);
+                        System.out.print("Is PlainText readable? (Y/N): ");
+                        Scanner scanner = new Scanner(System.in);
+                        String answer = scanner.nextLine();
+                        if (answer.equals("Y")) {
+                            return plainText;
                         }
                     }
                 }
             }
         }
-
         return "Failed to decrypt.";
     }
 
@@ -179,8 +181,8 @@ public class Exercise2 {
         return combinations;
     }
 
-    public static List<List<Integer>> solveMathematicalSystem(double x1, double y1, double x2, double y2) {
-        List<List<Integer>> solutions = new ArrayList<>();
+    public static int[] solveMathematicalSystem(int x1, int y1, int x2, int y2) {
+        int[] solution = new int[2];
 
         if (x1 == x2) {
             if (y1 == y2) {
@@ -189,26 +191,21 @@ public class Exercise2 {
                 return null; // No solution
             }
         } else {
-            double a = (y1 - y2) / (x1 - x2);
-            double b = y1 - ( x1 * a );
+            int inverse_x1 = inverse_modulo_of_a_number((int) x1, 26);
 
-            // Round the coefficients to integers
-            int roundedA = (int)Math.round(a);
-            int roundedB = (int)Math.round(b);
+            int a = ((y1 - y2) * inverse_x1) % 26;
+            if (a < 0)
+                a += 26;
 
-            // Check if the rounded coefficients are equal to the original ones
-            if (Math.abs(roundedA - a) < 1e-6 && Math.abs(roundedB - b) < 1e-6) {
-                // Coefficients are integers, add to solution list
-                List<Integer> singleSolution = new ArrayList<>();
-                singleSolution.add(roundedA);
-                singleSolution.add(roundedB);
-                solutions.add(singleSolution);
-            } else {
-                return null; // Coefficients are not integers
-            }
+            int b = (y1 - (x1 * a)) % 26;
+            if (b < 0)
+                b += 26;
+
+            solution[0] = a;
+            solution[1] = b;
+
+            return solution;
         }
-
-        return solutions;
     }
 
     private static int gcd(int a, int b) {
@@ -236,7 +233,6 @@ public class Exercise2 {
         for (char single_character : ciphertext.toCharArray()) {
             if (Character.isLetter(single_character)) {
                 char single_character_upper = Character.toUpperCase(single_character);
-                // Regularize the value of modulo in case of negative value by adding m to it
                 int decryptedChar = ((a_inverse_modulo * ((single_character_upper - 'A') - b)) % m + m ) % m;
                 char decrypted = (char) (decryptedChar + 'A');
                 plaintext.append(decrypted);

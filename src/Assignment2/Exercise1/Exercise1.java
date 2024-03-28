@@ -1,5 +1,6 @@
-package Assignment2.Exercise1;
+///package Assignment2.Exercise1;
 ///Delete the above line when you run from the terminal and leave it when you run from IDE
+
 import java.util.Scanner;
 
 public class Exercise1 {
