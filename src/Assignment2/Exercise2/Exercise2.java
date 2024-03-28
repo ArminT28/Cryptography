@@ -191,9 +191,13 @@ public class Exercise2 {
                 return null; // No solution
             }
         } else {
-            int inverse_x1 = inverse_modulo_of_a_number((int) x1, 26);
+            int inverse_x1_x2 = inverse_modulo_of_a_number(x1-x2, 26);
 
-            int a = ((y1 - y2) * inverse_x1) % 26;
+            if(inverse_x1_x2 == -1) {
+                return null; // Inverse doesn't exist
+            }
+
+            int a = ((y1 - y2) * inverse_x1_x2) % 26;
             if (a < 0)
                 a += 26;
 
