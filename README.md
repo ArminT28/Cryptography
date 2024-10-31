@@ -10,6 +10,7 @@ This repository contains solutions for the assignments from the **Cryptography**
 - Usage
 - Contributing
 - License
+- README File
 
 ---
 
@@ -47,3 +48,7 @@ Contributions to improve solutions or expand on cryptographic implementations ar
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+## README File
+
+This README File was generated using OpenAI's ChatGPT version 3.5.
